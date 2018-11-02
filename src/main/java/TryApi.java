@@ -14,13 +14,13 @@ public class TryApi {
             "   <soapenv:Header/>" +
             "   <soapenv:Body>" +
             "      <spel:CheckTextRequest lang=\"en\" options=\"0\" format=\"\">" +
-            "         <spel:text>Gald</spel:text>" +
+            "         <spel:text>%s</spel:text>" +
             "      </spel:CheckTextRequest>" +
             "   </soapenv:Body>" +
             "</soapenv:Envelope>";
 
 
-    public void getPostGetQuery() throws IOException {
+    public void getPostGetQuery(String word) throws IOException {
         HttpGet httpGet = new HttpGet("http://speller.yandex.net/services/spellservice");
         CloseableHttpResponse resp1 = httpClient.execute(httpGet);
         System.out.println(resp1.getStatusLine());
@@ -34,7 +34,7 @@ public class TryApi {
         httpPost.addHeader("Connection","Keep-Alive");
 
 
-        StringEntity strEnt = new StringEntity(sXML); // где sXML – body нашего запроса
+        StringEntity strEnt = new StringEntity(String.format(sXML,word)); // где sXML – body нашего запроса
         httpPost.setEntity(strEnt);
 
         resp1 = httpClient.execute(httpPost);
